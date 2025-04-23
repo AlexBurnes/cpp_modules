@@ -2,7 +2,7 @@
 CXX=clang++
 CC=clang
 BUILD_DIR=.build
-BUILD_TYPE
+BUILD_TYPE=Debug
 
 CONAN_PROFILE=default
 if [[ "${BUILD_TYPE}" == "Debug" ]]; then
