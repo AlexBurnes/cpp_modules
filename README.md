@@ -56,3 +56,14 @@ sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr
 
 После чего собралось.
 
+# Conan 
+
+Install conan
+
+```
+apt install -y python3 python3-pip
+pip3 install conan --break-system-packages
+conan profile detect --force
+```
+
+Other command to build project with conan see ./build script.
