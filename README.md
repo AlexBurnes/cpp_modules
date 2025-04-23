@@ -82,7 +82,7 @@ sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr
 
 ```
 sudo apt get install clang-19 clang-tools-19
-sudo bash ./update-alternatives-clang 19 1
+sudo bash ./update-alternatives-clang.sh 19 1
 ```
 
 # Conan 
