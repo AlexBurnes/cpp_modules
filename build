@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+CXX=clang++
+CC=clang
+cmake -H. -B.build -GNinja -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC}
+cmake --build .build

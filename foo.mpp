@@ -1,0 +1,19 @@
+module;
+
+#include <iostream>
+
+export module foo;
+
+export class foo {
+    public:
+        foo();
+        ~foo();
+        void hello_world();
+};
+
+foo::foo() {}
+foo::~foo() {}
+
+void foo::hello_world() {
+    std::cout << "modules hello world!\n";
+}

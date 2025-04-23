@@ -1,0 +1,9 @@
+PROJECT_NAME=cpp_modules
+
+# build directory cleanup
+BUILD_CLEANUP=0
+# cmake generator
+BUILD_GENERATOR=Ninja
+
+#conan cache clean
+CONAN_CLEANUP=0

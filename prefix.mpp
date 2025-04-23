@@ -1,0 +1,21 @@
+module;
+
+export module prefix;
+
+export template <typename Logger> class prefix {
+    private:
+        Logger& logger;
+    public:
+        prefix(Logger& logger);
+        ~prefix();
+        void output();
+};
+
+template <typename Logger>
+prefix<Logger>::prefix(Logger& logger): logger{logger} {}
+
+template <typename Logger>
+prefix<Logger>::~prefix() {}
+
+template <typename Logger>
+void prefix<Logger>::output() { logger.info() << "testing prefix\n";}

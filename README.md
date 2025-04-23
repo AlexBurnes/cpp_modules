@@ -1,0 +1,58 @@
+# C++20 modules, cmake and compilers supports
+
+## Documenatation
+
+    https://www.kitware.com/import-cmake-the-experiment-is-over/
+    https://anarthal.github.io/cppblog/modules3
+    https://en.cppreference.com/w/cpp/language/modules
+
+# Build
+
+Require install ninja >=1.11 https://github.com/ninja-build/ninja/releases
+
+## Вручную gcc 13.1
+
+```
+g++ -std=c++20 -fmodules-ts foo.cpp main.cpp -o hello.exe -x c++-system-header iostream
+```
+
+Note - is not neccessary -x c++-system-header iostream 
+
+## Cmake using GCC 13.1
+
+```
+cmake -H. -B.build -GNinja  
+```
+
+Не работает с gcc, хотя g++ спрокойно собирает его, ошибка:
+
+```
+CMake Error in CMakeLists.txt:
+  The target named "hello" has C++ sources that may use modules, but the
+  compiler does not provide a way to discover the import graph dependencies.
+  See the cmake-cxxmodules(7) manual for details.  Use the
+  CMAKE_CXX_SCAN_FOR_MODULES variable to enable or disable scanning.
+
+```
+
+## Cmake using Clang 19
+
+Сборка с помощью clang, приводит к другой ошибке
+
+```
+mkdir build
+cd build
+CXX=clang++ CC=clang cmake -GNinja ..
+ninja -v
+```
+
+```
+FAILED: CMakeFiles/foo.dir/foo.cpp.o.ddi 
+"CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+```
+
+sudo apt install clang-tools-19
+sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr/bin/clang-scan-deps-19 19
+
+После чего собралось.
+
