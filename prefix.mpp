@@ -1,5 +1,7 @@
 module;
 
+#include <fmt/core.h>
+
 export module prefix;
 
 export template <typename Logger> class prefix {
@@ -18,4 +20,5 @@ template <typename Logger>
 prefix<Logger>::~prefix() {}
 
 template <typename Logger>
-void prefix<Logger>::output() { logger.info() << "testing prefix\n";}
+void prefix<Logger>::output() { 
+    logger.info() << fmt::format("testing prefix pi {}\n", 3.1415926f);}

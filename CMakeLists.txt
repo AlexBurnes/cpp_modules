@@ -7,14 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
-# Create a library
-
-add_library(foo)
-target_sources(foo
-    PUBLIC
-        FILE_SET CXX_MODULES FILES
-        foo.mpp
-)
+find_package(fmt REQUIRED)
 
 add_library(logger)
 target_sources(
@@ -31,19 +24,23 @@ target_sources(
         FILE_SET CXX_MODULES FILES
         prefix.mpp
 )
+target_link_libraries(
+    prefix
+    PRIVATE
+        fmt::fmt
+    )
 
 # Create an executable
 add_executable(
-    hello 
+    example
         main.cpp
 
 )
 
 # Link to the library foo
 target_link_libraries(
-    hello 
+    example
     PRIVATE
-        foo 
         logger 
         prefix
 )

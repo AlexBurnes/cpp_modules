@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 CXX=clang++
 CC=clang
-cmake -H. -B.build -GNinja -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC}
-cmake --build .build
+BUILD_DIR=.build
+BUILD_TYPE
+
+CONAN_PROFILE=default
+if [[ "${BUILD_TYPE}" == "Debug" ]]; then
+    CONAN_PROFILE="debug"
+fi
+
+conan install . -of ${BUILD_DIR} -pr ${CONAN_PROFILE} --build missing
+source ${BUILD_DIR}/conanbuild.sh
+
+cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_INSTALL_PREFIX=./
+cmake --build ${BUILD_DIR}
