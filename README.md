@@ -3,24 +3,27 @@
 ## Documenatation
 
 Сmake:
-* https://www.kitware.com/import-cmake-the-experiment-is-over/
-* https://anarthal.github.io/cppblog/modules3
-* https://en.cppreference.com/w/cpp/language/modules
+
+- [import-cmake-the-experiment-is-over](https://www.kitware.com/import-cmake-the-experiment-is-over/)
+- [cppblog modules](https://anarthal.github.io/cppblog/modules3)
+
 
 Boost:
-* [[https://anarthal.github.io/cppblog/modules|C++20 modules and Boost: an analysis]]
-* [[https://anarthal.github.io/cppblog/modules2|C++20 modules and Boost: deep dive]]
-* [[https://anarthal.github.io/cppblog/modules3|C++20 modules and Boost: a prototype]]
+
+- [C++20 modules and Boost: an analysis](https://anarthal.github.io/cppblog/modules)
+- [C++20 modules and Boost: deep dive](https://anarthal.github.io/cppblog/modules2)
+- [C++20 modules and Boost: a prototype](https://anarthal.github.io/cppblog/modules3)
 
 
 Сonan:
-* https://blog.conan.io/2023/10/17/modules-the-packaging-story.html
-* https://github.com/jcar87/cxx-module-packaging
-* https://github.com/jcar87/cxx-module-packaging/blob/main/cppcon-talk/modules-the-packaging-and-binary-redistribution-story.pdf тут много информации для понимания BMI 
 
-C++ Reference:
-* [[https://en.cppreference.com/w/cpp/language/modules|C++ modules]]
+- [conan modules the packaging story](https://blog.conan.io/2023/10/17/modules-the-packaging-story.html)
+- [cxx module packaging](https://github.com/jcar87/cxx-module-packaging)
+- [modules-the-packaging-and-binary-redistribution-story.pdf](https://github.com/jcar87/cxx-module-packaging/blob/main/cppcon-talk/modules-the-packaging-and-binary-redistribution-story.pdf)
 
+C++:
+
+- [C++ modules](https://en.cppreference.com/w/cpp/language/modules]
 
 # Build
 
