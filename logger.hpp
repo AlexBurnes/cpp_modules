@@ -1,10 +1,6 @@
-module;
-
 #include <iostream>
 
-export module logger;
-
-export class logger : public std::ostream {
+class logger : public std::ostream {
     private:
         std::ostream& out;
     public:

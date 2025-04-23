@@ -12,5 +12,7 @@ fi
 conan install . -of ${BUILD_DIR} -pr ${CONAN_PROFILE} --build missing
 source ${BUILD_DIR}/conanbuild.sh
 
-cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_INSTALL_PREFIX=./
+cmake -H. -B${BUILD_DIR} -GNinja \
+    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} \
+    -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_INSTALL_PREFIX=./ --no-warn-unused-cli
 cmake --build ${BUILD_DIR}
