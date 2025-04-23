@@ -2,9 +2,25 @@
 
 ## Documenatation
 
-    https://www.kitware.com/import-cmake-the-experiment-is-over/
-    https://anarthal.github.io/cppblog/modules3
-    https://en.cppreference.com/w/cpp/language/modules
+Сmake:
+* https://www.kitware.com/import-cmake-the-experiment-is-over/
+* https://anarthal.github.io/cppblog/modules3
+* https://en.cppreference.com/w/cpp/language/modules
+
+Boost:
+* [[https://anarthal.github.io/cppblog/modules|C++20 modules and Boost: an analysis]]
+* [[https://anarthal.github.io/cppblog/modules2|C++20 modules and Boost: deep dive]]
+* [[https://anarthal.github.io/cppblog/modules3|C++20 modules and Boost: a prototype]]
+
+
+Сonan:
+* https://blog.conan.io/2023/10/17/modules-the-packaging-story.html
+* https://github.com/jcar87/cxx-module-packaging
+* https://github.com/jcar87/cxx-module-packaging/blob/main/cppcon-talk/modules-the-packaging-and-binary-redistribution-story.pdf тут много информации для понимания BMI 
+
+C++ Reference:
+* [[https://en.cppreference.com/w/cpp/language/modules|C++ modules]]
+
 
 # Build
 
@@ -51,8 +67,11 @@ FAILED: CMakeFiles/foo.dir/foo.cpp.o.ddi
 "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
 ```
 
+Поставил clang-scan-deps
+```
 sudo apt install clang-tools-19
 sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr/bin/clang-scan-deps-19 19
+```
 
 После чего собралось.
 
@@ -67,3 +86,4 @@ conan profile detect --force
 ```
 
 Other command to build project with conan see ./build script.
+
