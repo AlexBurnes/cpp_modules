@@ -36,14 +36,12 @@ target_link_libraries(
         fmt::fmt
     )
 
-# Create an executable
 add_executable(
     example
         main.cpp
 
 )
 
-# Link to the library foo
 target_link_libraries(
     example
     PRIVATE
