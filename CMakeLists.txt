@@ -7,6 +7,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
+include(degree.cmake)
+
+# Define paralle job pool for ninja
+define_parallel_degree(4) 
+
 find_package(fmt REQUIRED)
 
 add_library(logger)

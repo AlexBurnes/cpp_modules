@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 CXX=clang++
 CC=clang
+#CXX=g++
+#CC=gcc
 BUILD_DIR=.build
 BUILD_TYPE=Debug
 
