@@ -9,4 +9,7 @@ ninja/1.12.1
 CMakeDeps
 CMakeToolchain
 
+[layout]
+cmake_layout
+
 [options]

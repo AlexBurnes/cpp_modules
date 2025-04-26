@@ -11,7 +11,7 @@ int main() {
 
     std::cout << std::format("main using {}", "std::format\n");
     //if uncomment this compile will fail
-    std::cout << fmt::format("main using {} also", "fmt::format\n");
+    //std::cout << fmt::format("main using {} also", "fmt::format\n");
 
     return 0;
 }
