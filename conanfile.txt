@@ -1,5 +1,6 @@
 [requires]
-fmt/10.2.1
+module-prefix/[>=0.1.0]
+module-logger/[>=0.1.0]
 
 [tool_requires]
 cmake/3.28.1

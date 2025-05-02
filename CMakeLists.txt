@@ -12,29 +12,8 @@ include(degree.cmake)
 # Define paralle job pool for ninja
 define_parallel_degree(4)
 
-find_package(fmt REQUIRED)
-
-add_library(logger)
-target_sources(
-    logger PUBLIC
-    FILE_SET CXX_MODULES
-    FILES
-        logger.mpp
-)
-
-add_library(prefix)
-target_sources(
-    prefix PUBLIC
-    FILE_SET CXX_MODULES
-    FILES
-        prefix.mpp
-)
-
-target_link_libraries(
-    prefix
-    PRIVATE
-        fmt::fmt
-    )
+find_package(module-logger CONFIG REQUIRED)
+find_package(module-prefix CONFIG REQUIRED)
 
 add_executable(
     example
@@ -45,6 +24,6 @@ add_executable(
 target_link_libraries(
     example
     PRIVATE
-        logger
-        prefix
+        module-logger::module-logger
+        module-prefix::module-prefix
 )

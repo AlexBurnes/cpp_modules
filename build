@@ -1,18 +1,36 @@
 #!/usr/bin/env bash
-set -x
+set -x 
+set -o errexit
+set -o nounset
+
+PWD=$(pwd)
+trap cleanup_ SIGINT SIGTERM EXIT
+cleanup_() {
+    rc=$?
+    trap - SIGINT SIGTERM EXIT
+    set +e
+    [[ "$(type -t cleanup)" == "function" ]] && cleanup
+    cd "${PWD}"
+    exit $rc
+}
+
 CXX=clang++
 CC=clang
-#CXX=g++
-#CC=gcc
 BUILD_DIR=.build
 BUILD_TYPE=Release
 
-CONAN_PROFILE=default
-if [[ "${BUILD_TYPE}" == "Debug" ]]; then
-    CONAN_PROFILE="debug"
-fi
+export CXX CC
 
-conan install . -of ${BUILD_DIR} -pr ${CONAN_PROFILE} --build missing
+CONAN_PROFILE=${CC}_${BUILD_TYPE}
+
+conan profile detect --name ${CONAN_PROFILE} -f
+sed -i -e "s/compiler.cppstd=gnu17/compiler.cppstd=gnu20/g" ~/.conan2/profiles/${CONAN_PROFILE}
+cat << EOF >> ~/.conan2/profiles/${CONAN_PROFILE}
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+EOF
+
+conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing
 source ${BUILD_DIR}/build/${BUILD_TYPE}/generators/conanbuild.sh
 
 cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
