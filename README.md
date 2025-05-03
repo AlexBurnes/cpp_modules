@@ -86,23 +86,6 @@ sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr
 
 После чего собралось.
 
-### Install clang-19 with clang-scan-deps
-
-```
-sudo apt get install clang-19 clang-tools-19
-sudo bash ./update-alternatives-clang.sh 19 1
-```
-
-# Conan 
-
-Install conan
-
-```
-apt install -y python3 python3-pip
-pip3 install conan --break-system-packages
-conan profile detect --force
-```
-
 # Build
 
 ## Working build tools environment
