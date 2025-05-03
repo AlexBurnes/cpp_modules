@@ -1,7 +1,7 @@
 import prefix;
 import logger;
 #include <iostream>
-//#include <format>
+#include <format>
 
 int main() {
     
@@ -9,7 +9,7 @@ int main() {
     prefix<logger> p(l);
     p.output();
 
-    //std::cout << std::format("main using {}", "std::format\n");
+    std::cout << std::format("main using {}", "std::format\n");
     //if uncomment this compile will fail
     //std::cout << fmt::format("main using {} also", "fmt::format\n");
 
