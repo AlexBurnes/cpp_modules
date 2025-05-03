@@ -1,10 +1,10 @@
 [requires]
-module-prefix/[>=0.1.0]
-module-logger/[>=0.1.0]
+module-prefix/[>=0.1.0 <1.0.0]
+module-logger/[>=0.1.0 <1.0.0]
 
 [tool_requires]
-cmake/3.28.1
-ninja/1.12.1
+cmake/[>=3.28.1 <4.0.0]
+ninja/[>=1.11.1 <2.0.0]
 
 [generators]
 CMakeDeps
