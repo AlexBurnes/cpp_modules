@@ -29,7 +29,7 @@ C++:
 
 - [C++ modules](https://en.cppreference.com/w/cpp/language/modules]
 
-# Build
+# Experiments
 
 Require install ninja >=1.11 https://github.com/ninja-build/ninja/releases
 
@@ -60,7 +60,7 @@ CMake Error in CMakeLists.txt:
 
 ## Cmake using GCC 14.1
 
-Вручную работает, c cmake ошибка, возможно что неправильно собрал gcc-14 и поставил его, нужно через update-alternatives. Пока отложил экперименты.
+Вручную работает, c cmake ошибка, но уже другая, возможно что неправильно собрал gcc-14 и поставил его, нужно через update-alternatives. Пока отложил экперименты.
 
 ## Cmake using Clang 19
 
@@ -103,9 +103,9 @@ pip3 install conan --break-system-packages
 conan profile detect --force
 ```
 
-Other command to build project with conan see ./build script.
+# Build
 
-# Working build tools environment
+## Working build tools environment
 
 * Cmake 3.28.0
 * ninja 1.11.1
@@ -113,3 +113,82 @@ Other command to build project with conan see ./build script.
 * clang-19
 
 See build script and Dockerfile how to build project using c++20 modules.
+
+## Install required tools
+
+### Clang 19
+
+```
+sudo apt install clang-19 lang-tools-19
+sudo bash update-alternatives-clang 19 19
+sudo bash update-alternatives config clang
+```
+
+### Conan 2.16
+
+```
+git clone -v https://github.com/conan-io/conan.git conan-io
+cd conan-io
+pip3 install -e . --break-system-packages
+```
+
+## Building project
+
+Run build script
+
+```
+bash build
+```
+
+Build script:
+
+```
+#!/usr/bin/env bash
+set -x 
+set -o errexit
+set -o nounset
+
+PWD=$(pwd)
+trap cleanup_ SIGINT SIGTERM EXIT
+cleanup_() {
+    rc=$?
+    trap - SIGINT SIGTERM EXIT
+    set +e
+    [[ "$(type -t cleanup)" == "function" ]] && cleanup
+    cd "${PWD}"
+    exit $rc
+}
+
+BUILD_DIR=.build
+BUILD_TYPE=Release
+
+# Define compiler 
+CXX=clang++
+CC=clang
+export CXX CC
+
+# Detect and configure conan profile for clang
+CONAN_PROFILE=${CC}_${BUILD_TYPE}
+conan profile detect --name ${CONAN_PROFILE} -f
+sed -i -e "s/compiler.cppstd=gnu17/compiler.cppstd=gnu20/g" ~/.conan2/profiles/${CONAN_PROFILE}
+cat << EOF >> ~/.conan2/profiles/${CONAN_PROFILE}
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+EOF
+
+# Install and build conan libraries and tools defined in conantfile.txt
+conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing
+source ${BUILD_DIR}/build/${BUILD_TYPE}/generators/conanbuild.sh
+
+# Cmake configure project
+cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+    -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} \
+    -DCMAKE_TOOLCHAIN_FILE=${BUILD_DIR}/build/${BUILD_TYPE}/generators/conan_toolchain.cmake \
+    -DCMAKE_INSTALL_PREFIX=./
+
+# Build project
+cmake --build ${BUILD_DIR}
+
+# Install builded targets
+cmake --install ${BUILD_DIR}
+```
