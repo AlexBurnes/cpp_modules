@@ -175,3 +175,12 @@ cmake --build ${BUILD_DIR}
 # Install builded targets
 cmake --install ${BUILD_DIR}
 ```
+
+# History of changes
+
+You can see the evolution of changes from the templated header only libraries to the module libraries in the project branches:
+* header_only - class libraries in .hpp files
+* library_modules - intermediate version monolit project with c++20 modules in .mpp files
+* master - c++20 modules are conan package libraries, this project install and use them, modules in a separate projects:
+** module logger http://gitsrv.svyazcom.ru/burnes/cpp_module_logger
+** module prefix http://gitsrv.svyazcom.ru/burnes/cpp_module_prefix
