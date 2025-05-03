@@ -1,0 +1,1 @@
+sudo docker build --tag cpp_modules:latest --network host --progress=plain .

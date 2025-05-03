@@ -17,7 +17,7 @@ find_package(module-prefix CONFIG REQUIRED)
 
 add_executable(
     example
-        main.cpp
+        src/main.cpp
 
 )
 
@@ -26,4 +26,9 @@ target_link_libraries(
     PRIVATE
         module-logger::module-logger
         module-prefix::module-prefix
+)
+
+install(
+    TARGETS example
+    RUNTIME DESTINATION bin
 )

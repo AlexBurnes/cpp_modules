@@ -30,11 +30,13 @@ cat << EOF >> ~/.conan2/profiles/${CONAN_PROFILE}
 tools.cmake.cmaketoolchain:generator=Ninja
 EOF
 
-conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing
+conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing --build "module-*" --update
 source ${BUILD_DIR}/build/${BUILD_TYPE}/generators/conanbuild.sh
 
 cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} \
-    -DCMAKE_TOOLCHAIN_FILE=${BUILD_DIR}/build/${BUILD_TYPE}/generators/conan_toolchain.cmake
+    -DCMAKE_TOOLCHAIN_FILE=${BUILD_DIR}/build/${BUILD_TYPE}/generators/conan_toolchain.cmake \
+    -DCMAKE_INSTALL_PREFIX=./
 
 cmake --build ${BUILD_DIR}
+cmake --install ${BUILD_DIR}
