@@ -1,5 +1,9 @@
 # C++20 modules, cmake and compilers supports
 
+Experimental project to determine the readiness of build utilities and library packages for building a project using c++20 modules.
+
+Goal: Write header only libraries as conan package library, build this project using that libraries.
+
 ## Documenatation
 
 Сmake:
@@ -54,6 +58,10 @@ CMake Error in CMakeLists.txt:
 
 ```
 
+## Cmake using GCC 14.1
+
+Вручную работает, c cmake ошибка, возможно что неправильно собрал gcc-14 и поставил его, нужно через update-alternatives. Пока отложил экперименты.
+
 ## Cmake using Clang 19
 
 Сборка с помощью clang, приводит к другой ошибке
@@ -97,3 +105,11 @@ conan profile detect --force
 
 Other command to build project with conan see ./build script.
 
+# Working build tools environment
+
+* Cmake 3.28.0
+* ninja 1.11.1
+* conan 2.16
+* clang-19
+
+See build script and Dockerfile how to build project using c++20 modules.
