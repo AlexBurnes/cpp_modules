@@ -30,9 +30,10 @@ RUN git clone -v https://github.com/conan-io/conan.git conan-io &&\
 RUN bash update-alternatives-clang.sh 19 19
 
 RUN CXX=clang++ CC=clang conan profile detect &&\
-    conan remote add conan-local http://172.18.1.111:8081/artifactory/api/conan/conan-local &&\
-    conan remote add conan-proxy http://172.18.1.111:8081/artifactory/api/conan/conan-proxy-svc &&\
-    conan remote disable conancenter
+    git clone https://github.com/AlexBurnes/module_logger.git module_logger &&\
+    cd module_logger && bash build && cd .. &&\
+    git clone https://github.com/AlexBurnes/module_prefix.git module_prefix &&\
+    cd module_prefix && bash build && cd ..
 
 RUN bash build
 
