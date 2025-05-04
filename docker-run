@@ -1,1 +1,1 @@
-sudo docker run -it --rm --name cpp_modules cpp_modules /usr/bin/bash
+sudo docker run -it --rm --name cpp_modules cpp_modules /usr/local/bin/example

@@ -97,6 +97,8 @@ Working build tools environment:
 
 See the build script and Dockerfile for instructions on building the project using C++20 modules.
 
+Build tested in OS: ubuntu 22.04, ubuntu 24.04.2
+
 ## Install required tools
 
 ### Clang 19
@@ -185,3 +187,19 @@ You can see the evolution of changes from templated header-only libraries to mod
 * master - C++20 modules as Conan package libraries; this project installs and uses them. Modules are in separate projects:
     * Logger module: https://github.com/AlexBurnes/module_logger
     * Prefix module: https://github.com/AlexBurnes/module_prefix
+
+# Build in docker container
+
+
+
+Build: 
+
+    docker-build
+
+Run:
+
+    docker-run
+
+Note: Not yet complite, there is a trouble to build project and modules with clang and std::format. 
+Error: fatal error: 'format' file not found
+
