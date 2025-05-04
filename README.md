@@ -1,53 +1,49 @@
-# C++20 modules, cmake and compilers supports
+# C++20 Modules, CMake, and Compiler Support
 
-Experimental project to determine the readiness of build utilities and library packages for building a project using c++20 modules.
+Experimental project to evaluate the readiness of build utilities and library packages for building a project using C++20 modules.
 
-Goal: Write header only libraries as conan package library, build this project using that libraries.
+Goal: Create header-only libraries as Conan package libraries and build this project using those libraries.
 
-## Documenatation
+## Documentation
 
-Сmake:
+### CMake:
 
 - [import-cmake-the-experiment-is-over](https://www.kitware.com/import-cmake-the-experiment-is-over/)
 - [cppblog modules](https://anarthal.github.io/cppblog/modules3)
 
-
-Boost:
+### Boost:
 
 - [C++20 modules and Boost: an analysis](https://anarthal.github.io/cppblog/modules)
 - [C++20 modules and Boost: deep dive](https://anarthal.github.io/cppblog/modules2)
 - [C++20 modules and Boost: a prototype](https://anarthal.github.io/cppblog/modules3)
 
-
-Сonan:
+### Conan:
 
 - [conan modules the packaging story](https://blog.conan.io/2023/10/17/modules-the-packaging-story.html)
 - [cxx module packaging](https://github.com/jcar87/cxx-module-packaging)
 - [modules-the-packaging-and-binary-redistribution-story.pdf](https://github.com/jcar87/cxx-module-packaging/blob/main/cppcon-talk/modules-the-packaging-and-binary-redistribution-story.pdf)
 
-C++:
+### C++:
 
-- [C++ modules](https://en.cppreference.com/w/cpp/language/modules]
+- [C++ modules](https://en.cppreference.com/w/cpp/language/modules)
 
 # Experiments
 
-Require install ninja >=1.11 https://github.com/ninja-build/ninja/releases
+Requires installation of ninja >=1.11: https://github.com/ninja-build/ninja/releases
 
-## Вручную gcc 13.1
+## Manual build with GCC 13.1
 
-```
+```bash
 g++ -std=c++20 -fmodules-ts foo.cpp main.cpp -o hello.exe -x c++-system-header iostream
 ```
 
-Note - is not neccessary -x c++-system-header iostream 
+## CMake with GCC 13.1
 
-## Cmake using GCC 13.1
-
-```
-cmake -H. -B.build -GNinja  
+```bash
+cmake -H. -B.build -GNinja
 ```
 
-Не работает с gcc, хотя g++ спрокойно собирает его, ошибка:
+Doesn't work with GCC, although g++ compiles it without issues. Error:
 
 ```
 CMake Error in CMakeLists.txt:
@@ -58,50 +54,54 @@ CMake Error in CMakeLists.txt:
 
 ```
 
-## Cmake using GCC 14.1
+## CMake with GCC 14.1
+Manual build works, but CMake produces a different error. This might be due to incorrect GCC-14 installation or configuration via update-alternatives. 
+Experiments are postponed for now.
 
-Вручную работает, c cmake ошибка, но уже другая, возможно что неправильно собрал gcc-14 и поставил его, нужно через update-alternatives. Пока отложил экперименты.
+## CMake with Clang 19
 
-## Cmake using Clang 19
+Building with Clang results in a different error:
 
-Сборка с помощью clang, приводит к другой ошибке
-
-```
+```bash
 mkdir build
 cd build
 CXX=clang++ CC=clang cmake -GNinja ..
 ninja -v
 ```
 
+Error:
+
 ```
 FAILED: CMakeFiles/foo.dir/foo.cpp.o.ddi 
 "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+
 ```
 
-Поставил clang-scan-deps
-```
+Installed clang-scan-deps:
+
+```bash
 sudo apt install clang-tools-19
 sudo update-alternatives --install /usr/bin/clang-scan-deps clang-scan-deps /usr/bin/clang-scan-deps-19 19
 ```
 
-После чего собралось.
+After installation, the build succeeds.
 
 # Build
 
-## Working build tools environment
+Working build tools environment:
 
-* Cmake 3.28.0
-* ninja 1.11.1
-* conan 2.16
-* clang-19
+* CMake 3.28.0
+* Ninja 1.11.1
+* Conan 2.16
+* Clang-19
 
-See build script and Dockerfile how to build project using c++20 modules.
+See the build script and Dockerfile for instructions on building the project using C++20 modules.
 
 ## Install required tools
 
 ### Clang 19
 
-```
+```bash
 sudo apt install clang-19 lang-tools-19
 sudo bash update-alternatives-clang 19 19
 sudo bash update-alternatives config clang
@@ -109,23 +109,24 @@ sudo bash update-alternatives config clang
 
 ### Conan 2.16
 
-```
+```bash
 git clone -v https://github.com/conan-io/conan.git conan-io
 cd conan-io
 pip3 install -e . --break-system-packages
-```
-
-## Building project
-
-Run build script
 
 ```
+
+## Building the project
+
+Run the build script:
+
+```bash
 bash build
 ```
 
 Build script:
 
-```
+```bash
 #!/usr/bin/env bash
 set -x 
 set -o errexit
@@ -163,7 +164,7 @@ EOF
 conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing
 source ${BUILD_DIR}/build/${BUILD_TYPE}/generators/conanbuild.sh
 
-# Cmake configure project
+# CMake configure project
 cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} \
     -DCMAKE_TOOLCHAIN_FILE=${BUILD_DIR}/build/${BUILD_TYPE}/generators/conan_toolchain.cmake \
@@ -172,16 +173,15 @@ cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 # Build project
 cmake --build ${BUILD_DIR}
 
-# Install builded targets
+# Install built targets
 cmake --install ${BUILD_DIR}
 ```
 
 # History of changes
 
-You can see the evolution of changes from the templated header only libraries to the module libraries in the project branches:
-
+You can see the evolution of changes from templated header-only libraries to module libraries in the project branches:
 * header_only - class libraries in .hpp files
-* library_modules - intermediate version monolit project with c++20 modules in .mpp files
-* master - c++20 modules are conan package libraries, this project install and use them, modules in a separate projects:
-    * module logger http://gitsrv.svyazcom.ru/burnes/cpp_module_logger
-    * module prefix http://gitsrv.svyazcom.ru/burnes/cpp_module_prefix
+* library_modules - intermediate version with monolithic project containing C++20 modules in .mpp files
+* master - C++20 modules as Conan package libraries; this project installs and uses them. Modules are in separate projects:
+    * Logger module: https://github.com/AlexBurnes/module_logger
+    * Prefix module: https://github.com/AlexBurnes/module_prefix
