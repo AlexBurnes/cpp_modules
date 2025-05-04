@@ -182,8 +182,8 @@ cmake --install ${BUILD_DIR}
 # History of changes
 
 You can see the evolution of changes from templated header-only libraries to module libraries in the project branches:
-* header_only - class libraries in .hpp files
-* library_modules - intermediate version with monolithic project containing C++20 modules in .mpp files
+* header_only - templated class libraries in .hpp files
+* library_modules - intermediate version as monolithic project containing C++20 modules in .mpp files
 * master - C++20 modules as Conan package libraries; this project installs and uses them. Modules are in separate projects:
     * Logger module: https://github.com/AlexBurnes/module_logger
     * Prefix module: https://github.com/AlexBurnes/module_prefix
