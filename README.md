@@ -120,6 +120,13 @@ pip3 install -e . --break-system-packages
 
 ## Building the project
 
+Init submodules
+
+```bash
+git submodule init
+git submodule update
+```
+
 Run the build script:
 
 ```bash
