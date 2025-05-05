@@ -123,61 +123,10 @@ pip3 install -e . --break-system-packages
 Run the build script:
 
 ```bash
-bash build
+scripts/build
 ```
 
-Build script:
-
-```bash
-#!/usr/bin/env bash
-set -x 
-set -o errexit
-set -o nounset
-
-PWD=$(pwd)
-trap cleanup_ SIGINT SIGTERM EXIT
-cleanup_() {
-    rc=$?
-    trap - SIGINT SIGTERM EXIT
-    set +e
-    [[ "$(type -t cleanup)" == "function" ]] && cleanup
-    cd "${PWD}"
-    exit $rc
-}
-
-BUILD_DIR=.build
-BUILD_TYPE=Release
-
-# Define compiler 
-CXX=clang++
-CC=clang
-export CXX CC
-
-# Detect and configure conan profile for clang
-CONAN_PROFILE=${CC}_${BUILD_TYPE}
-conan profile detect --name ${CONAN_PROFILE} -f
-sed -i -e "s/compiler.cppstd=gnu17/compiler.cppstd=gnu20/g" ~/.conan2/profiles/${CONAN_PROFILE}
-cat << EOF >> ~/.conan2/profiles/${CONAN_PROFILE}
-[conf]
-tools.cmake.cmaketoolchain:generator=Ninja
-EOF
-
-# Install and build conan libraries and tools defined in conantfile.txt
-conan install . -of ${BUILD_DIR} -pr:h ${CONAN_PROFILE} -pr:b ${CONAN_PROFILE} --build missing
-source ${BUILD_DIR}/build/${BUILD_TYPE}/generators/conanbuild.sh
-
-# CMake configure project
-cmake -H. -B${BUILD_DIR} -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-    -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CC_COMPILER=${CC} \
-    -DCMAKE_TOOLCHAIN_FILE=${BUILD_DIR}/build/${BUILD_TYPE}/generators/conan_toolchain.cmake \
-    -DCMAKE_INSTALL_PREFIX=./
-
-# Build project
-cmake --build ${BUILD_DIR}
-
-# Install built targets
-cmake --install ${BUILD_DIR}
-```
+Environment for build script defined in .project file.
 
 # History of changes
 
@@ -189,8 +138,6 @@ You can see the evolution of changes from templated header-only libraries to mod
     * Prefix module: https://github.com/AlexBurnes/module_prefix
 
 # Build in docker container
-
-
 
 Build: 
 

@@ -35,7 +35,7 @@ RUN CXX=clang++ CC=clang conan profile detect &&\
     git clone https://github.com/AlexBurnes/module_prefix.git module_prefix &&\
     cd module_prefix && bash build && cd ..
 
-RUN bash build
+RUN scripts/build
 
 ################################################################################
 

@@ -1,4 +1,6 @@
 PROJECT_NAME=cpp_modules
+CXX=clang++
+CC=clang
 
 # build directory cleanup
 BUILD_CLEANUP=0
@@ -7,3 +9,4 @@ BUILD_GENERATOR=Ninja
 
 #conan cache clean
 CONAN_CLEANUP=0
+CONAN_OPTIONS="-c=tools.cmake.cmaketoolchain:generator=Ninja -s=compiler.cppstd=gnu20"
