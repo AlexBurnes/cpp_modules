@@ -9,9 +9,9 @@ set(CMAKE_CXX_EXTENSIONS ON)
 #set(CMAKE_CXX_FLAGS "-std=c++20 -s -O3")
 
 include(cmake/modules.cmake)
-
 # Define paralle job pool for ninja
 define_parallel_degree(4)
+include(pedantic)
 
 find_package(module-logger CONFIG REQUIRED)
 find_package(module-prefix CONFIG REQUIRED)

@@ -115,7 +115,7 @@ sudo bash update-alternatives config clang
 git clone -v https://github.com/conan-io/conan.git conan-io
 cd conan-io
 pip3 install -e . --break-system-packages
-
+conan remote update conancenter --url https://center2.conan.io
 ```
 
 ## Building the project
